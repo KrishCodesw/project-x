@@ -5,7 +5,7 @@ import { z } from "zod";
 export const env = createEnv({
   // Server-side variables (never exposed to the browser)
   server: {
-    DATABASE_URL: z.string().url(),
+   DATABASE_URL: z.string().url(),
     AUTH_SECRET: z.string().min(1),
     GOOGLE_CLIENT_ID: z.string().min(1).optional(),
     GOOGLE_CLIENT_SECRET: z.string().min(1).optional(),
@@ -28,4 +28,6 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
   },
+  emptyStringAsUndefined: true,
+
 });
