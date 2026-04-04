@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Base Starter Kit
 
-## Getting Started
+A production-ready Next.js 16 boilerplate designed for rapid development, hackathons, and SaaS foundations. 
 
-First, run the development server:
+## Features
 
-```bash
+* Next.js 16 App Router with Turbopack
+* Type-safe database management with Prisma v6 and Neon PostgreSQL
+* End-to-end authentication with Auth.js v5 (Google OAuth & Credentials)
+* Complete password reset flow with Resend email integration
+* UI components powered by Shadcn, Tailwind CSS, and Radix
+* Dark mode support via next-themes
+* Client state management with Zustand
+* URL query state syncing with Nuqs
+* Build-time environment variable validation via t3-env
+* Pre-configured GitHub Actions for CI/CD
+* Standalone Dockerfile for platform-agnostic deployment
+
+## Environment Variables
+
+Copy the `.env.example` file to `.env` and fill in your values.
+
+DATABASE_URL="postgresql://user:password@host/db"
+AUTH_SECRET="generate_a_random_32_character_string"
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
+
+# Optional (Required for specific features)
+GOOGLE_CLIENT_ID=""
+GOOGLE_CLIENT_SECRET=""
+RESEND_API_KEY=""
+
+## Manual Setup
+
+1. Install dependencies
+npm install
+
+2. Push the database schema
+npx prisma db push
+
+3. Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Docker Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project includes a multi-stage Dockerfile optimized for Next.js standalone output.
 
-## Learn More
+1. Build the Docker image
+During the build phase, t3-env will check for environment variables. You can pass dummy variables for the build process.
 
-To learn more about Next.js, take a look at the following resources:
+docker build -t base-starter-kit \
+  --build-arg DATABASE_URL="postgresql://dummy" \
+  --build-arg AUTH_SECRET="dummy" \
+  .
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Run the container
+Pass your actual environment variables when running the container.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+docker run -p 3000:3000 \
+  -e DATABASE_URL="your_actual_db_url" \
+  -e AUTH_SECRET="your_actual_secret" \
+  base-starter-kit
 
-## Deploy on Vercel
+## Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* `npm run dev`: Starts the Turbopack development server.
+* `npm run build`: Builds the application for production.
+* `npm run start`: Runs the built production application.
+* `npm run lint`: Runs ESLint.
