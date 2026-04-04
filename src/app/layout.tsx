@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/shared/navbar";
 import { ThemeProvider } from "@/components/shared/theme-provider";
+import { NuqsAdapter } from "nuqs/adapters/next/app"; // <-- Add this import
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +30,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          <main className="flex-1 flex flex-col">{children}</main>
+          {/* Wrap the main content with NuqsAdapter */}
+          <NuqsAdapter>
+            <main className="flex-1 flex flex-col">{children}</main>
+          </NuqsAdapter>
         </ThemeProvider>
       </body>
     </html>
