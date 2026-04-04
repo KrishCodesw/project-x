@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { auth, signOut } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
+import { ModeToggle } from "@/components/shared/mode-toggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,6 +37,7 @@ export default async function Navbar() {
 
         {/* Right Side - Auth / User Profile */}
         <div className="flex items-center space-x-4">
+          <ModeToggle />
           {session ? (
             <DropdownMenu>
               <DropdownMenuTrigger>
