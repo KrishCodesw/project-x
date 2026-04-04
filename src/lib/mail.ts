@@ -1,8 +1,9 @@
 // src/lib/mail.ts
 import { Resend } from "resend";
+import { env } from "@/env";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const domain = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+const resend = new Resend(env.RESEND_API_KEY);
+const domain = env.NEXT_PUBLIC_APP_URL;
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
   const resetLink = `${domain}/reset-password?token=${token}`;
